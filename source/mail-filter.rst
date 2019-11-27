@@ -74,8 +74,10 @@ After having enabled the uberspace rspamd spamfilter, you will want to make use 
   if ( /^X-Rspamd-Score: ([-+]?[0-9]*\.?[0-9]+)/ )
     to "$FOLDER_Junk"
 
-.. tip::
-  You might to try some different numbers for your maximum spam score. For some, setting it to 3.5 might work. Try some different numbers until you find the rate of false positives to false negatives suits you best. But be sure to put the number as a floating-point number (so that's "3.0" rather than "3").
+You may want to try some different numbers for your maximum spam score. For some, setting it to 3.5 might work. Try some different numbers until you find the rate of false positives to false negatives suits you best. But be sure to put the number as a floating-point number (so that's "3.0" rather than "3").
+
+.. code-block:: bash
+  MAXSPAMSCORE=3.5
 
 Filtering by Subjects
 ---------------------
