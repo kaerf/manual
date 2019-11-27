@@ -63,6 +63,7 @@ Junk mail filtering
 After having enabled the uberspace rspamd spamfilter, you will want to make use of the headers it sets.
 
 .. code-block:: bash
+
   # set a variable to contain your maximum spam score to 5
   MAXSPAMSCORE=5.0
   # default name for your Junk folder should be "Junk", right under your Inbox.
@@ -77,6 +78,7 @@ After having enabled the uberspace rspamd spamfilter, you will want to make use 
 You may want to try some different numbers for your maximum spam score. For some, setting it to 3.5 might work. Try some different numbers until you find the rate of false positives to false negatives suits you best. But be sure to put the number as a floating-point number (so that's "3.0" rather than "3").
 
 .. code-block:: bash
+
   MAXSPAMSCORE=3.5
 
 Filtering by Subjects
