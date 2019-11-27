@@ -73,7 +73,10 @@ After having enabled the uberspace rspamd spamfilter, you will want to make use 
 
   # test the currently treated email for a X-Rspamd-Score header using a regular expression
   if ( /^X-Rspamd-Score: ([-+]?[0-9]*\.?[0-9]+)/ )
+  {
     to "$FOLDER_Junk"
+    exit
+  }
 
 You may want to try some different numbers for your maximum spam score. For some, setting it to 3.5 might work. Try some different numbers until you find the rate of false positives to false negatives suits you best. But be sure to put the number as a floating-point number (so that's "3.0" rather than "3").
 
@@ -91,7 +94,24 @@ Similarly, a regular expression can be used to search in the email subject or ot
   # move subjects "final notice" or "you have more friends on facebook than you think" to Junk
   # to be certain also subjects with one or more spaces in the beginning are caught, use "\s+"
   if ( /^Subject:\s+(final notice|you have more friends on facebook than you think)/ )
+  {
     to "$FOLDER_Junk"
+    exit
+  }
+
+Filtering senders
+-----------------
+
+.. code-block:: bash
+  
+  # filter known junk senders, for example full addresses, or single words (careful with these)
+  # in order to see if this provision filters email that should not be filtered, write to the log file
+  if ( /^From:\s+(groups-noreply@linkedin.com|lottery)/ )
+  {
+    log "matched the following in From and moved it to Junk: \'$MATCH1\'"
+    to "$FOLDER_Junk"
+    exit
+  }
 
 Create mail folders automatically
 ---------------------------------
@@ -125,11 +145,25 @@ Full example config
 
   # test the currently treated email for a X-Rspamd-Score header using a regular expression
   if ( /^X-Rspamd-Score:\s+([-+]?[0-9]*\.?[0-9]+)/ )
+  {
     to "$FOLDER_Junk"
+    exit
+  }
   # move subjects "final notice" or "you have more friends on facebook than you think" to Junk
   # to be certain also subjects with one or more spaces in the beginning are caught, use "\s+"
   if ( /^Subject:\s+(final notice|you have more friends on facebook than you think)/ )
+  {
     to "$FOLDER_Junk"
+    exit
+  }
+  # filter known junk senders, for example full addresses, or single words (careful with these)
+  # in order to see if this provision filters email that should not be filtered, write a message to the log file
+  if ( /^From:\s+(groups-noreply@linkedin.com|lottery)/ )
+  {
+    log "matched the following in From and moved it to Junk: \'$MATCH1\'"
+    to "$FOLDER_Junk"
+    exit
+  }
 
   # last line in your config file is the to command that ultimately drops mail into your Inbox
   to "$MAILDIR"
