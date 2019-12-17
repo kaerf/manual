@@ -72,7 +72,8 @@ After having enabled the uberspace rspamd spamfilter, you will want to make use 
   # ...
 
   # test the currently treated email for a X-Rspamd-Score header using a regular expression
-  if ( /^X-Rspamd-Score: ([-+]?[0-9]*\.?[0-9]+)/ )
+  /^X-Rspamd-Score: ([-+]?[0-9]*\.?[0-9]+)/
+  if ( $MATCH1 >= $MAXSPAMSCORE )
   {
     to "$FOLDER_Junk"
     exit
@@ -144,7 +145,8 @@ Full example config
   `test -d "$FOLDER_Junk" || /usr/bin/maildirmake "$FOLDER_JUNK"`
 
   # test the currently treated email for a X-Rspamd-Score header using a regular expression
-  if ( /^X-Rspamd-Score:\s+([-+]?[0-9]*\.?[0-9]+)/ )
+  /^X-Rspamd-Score: ([-+]?[0-9]*\.?[0-9]+)/
+  if ( $MATCH1 >= $MAXSPAMSCORE )
   {
     to "$FOLDER_Junk"
     exit
