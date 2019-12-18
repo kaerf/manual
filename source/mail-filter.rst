@@ -145,11 +145,13 @@ Full example config
   `test -d "$FOLDER_Junk" || /usr/bin/maildirmake "$FOLDER_JUNK"`
 
   # test the currently treated email for a X-Rspamd-Score header using a regular expression
-  /^X-Rspamd-Score: ([-+]?[0-9]*\.?[0-9]+)/
-  if ( $MATCH1 >= $MAXSPAMSCORE )
+  if ( /^X-Rspamd-Score: ([-+]?[0-9]*\.?[0-9]+)/ )
   {
-    to "$FOLDER_Junk"
-    exit
+      if ( $MATCH1 >= $MAXSPAMSCORE )
+      {
+        to "$FOLDER_Junk"
+        exit
+      }
   }
   # move subjects "final notice" or "you have more friends on facebook than you think" to Junk
   # to be certain also subjects with one or more spaces in the beginning are caught, use "\s+"
